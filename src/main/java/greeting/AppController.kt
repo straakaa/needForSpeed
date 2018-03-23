@@ -10,4 +10,9 @@ class AppController {
     fun hello(): String{
         return "je to tady Hello"
     }
+
+    @GetMapping("/bye")
+    fun bye(): String{
+        return "Bye bye"
+    }
 }
