@@ -1,4 +1,4 @@
-package needForSpeed;
+package needForSpeed
 
 
 import java.io.BufferedReader;

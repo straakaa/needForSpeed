@@ -1,0 +1,31 @@
+{
+  "name": "sample-basic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bobril": "*",
+    "bobx": "^0.11.0",
+    "es6": "0.0.7",
+    "pure-upload": "^4.2.1"
+  },
+  "devDependencies": {
+    "bobflux": "*"
+  },
+  "bobril": {
+    "compilerOptions": {
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "strictNullChecks": true,
+      "experimentalDecorators": true
+    }
+  }
+}

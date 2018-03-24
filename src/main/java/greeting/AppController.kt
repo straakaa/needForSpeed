@@ -5,6 +5,7 @@ import needForSpeed.NFSResult
 import needForSpeed.ParsedResult
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.*
@@ -12,7 +13,8 @@ import java.util.ArrayList
 import java.util.logging.Logger
 import javax.servlet.http.HttpServletRequest
 
-@RestController
+
+@Controller
 class AppController {
 
     private val storage: File = File("storage.txt")
@@ -23,21 +25,20 @@ class AppController {
         logger = Logger.getLogger(AppController::class.java.name)
     }
 
-    @GetMapping("/hello")
-    fun hello(): String {
-        return "je to tady Hello"
+    @GetMapping("/")
+    fun index(): String {
+        println("home method")
+        return "index"
     }
 
-    @GetMapping("/bye")
-    fun bye(): String {
-        return "Bye bye"
+    @RequestMapping(path = ["/results"], method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_JSON_VALUE)])
+    fun getTask(req: HttpServletRequest): ResponseEntity<List<NFSResult>> {
+        return ResponseEntity.ok(readResultsFromStorage())
     }
-
-    @RequestMapping(path = arrayOf("/upload"), method = arrayOf(RequestMethod.PUT), consumes = arrayOf(MediaType.MULTIPART_FORM_DATA_VALUE))
+    @RequestMapping(path = ["/upload"], method = [RequestMethod.PUT], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun uploadFile(@RequestParam("file") file: Array<MultipartFile>,
                    req: HttpServletRequest): ResponseEntity<NFSResult> {
 
-        println("dovolal se" + file)
 
         val parsedResult: ParsedResult
         try {
@@ -61,18 +62,12 @@ class AppController {
         } else {
             ResponseEntity.ok(null)
         }
-
-
     }
 
     private fun isUserNameStored(userName: String): Int {
         val results = readResultsFromStorage()
         val result = results.stream().filter { r -> r.getUserName().equals(userName) }.findFirst().orElse(null)
-        return if (result != null) {
-            result!!.getNumberOfCameras()
-        } else {
-            -1
-        }
+        return result?.getNumberOfCameras() ?: -1
     }
 
     @Synchronized private fun saveResult(result: NFSResult): Boolean {
@@ -105,7 +100,7 @@ class AppController {
                     break
                 }
                 val storedUserName = line.split(",")[0].split(":")[1]
-                val numberOfCameras = Integer.parseInt(line.split(",")[1].split(":")[1].trim());
+                val numberOfCameras = Integer.parseInt(line.split(",")[1].split(":")[1].trim())
                 results.add(NFSResult(storedUserName, numberOfCameras))
             }
         } catch (e: FileNotFoundException) {
@@ -129,22 +124,18 @@ class AppController {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
-
     }
 
-    @Throws(IOException::class)
     private fun parseResult(multipartFile: MultipartFile): ParsedResult {
         val coveredCrossroads = ArrayList<Int>()
         val bytes = multipartFile.bytes
         val completeData = String(bytes)
         val userName: String
         val solution: String
-        userName = completeData.split("\r\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
-        solution = completeData.split("\r\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+        userName = completeData.split("\r\n")[0]
+        solution = completeData.split("\r\n")[1]
 
-
-        val parsedSolution = solution.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val parsedSolution = solution.split(",")
         for (nodeId in parsedSolution) {
             coveredCrossroads.add(Integer.parseInt(nodeId))
         }
