@@ -25,12 +25,12 @@ export const tabulka = b.createComponent<ITabulkaData>({
     },
     render(ctx: ITabulkaCtx, me: b.IBobrilNode) {
 
-        me.tag = 'button';
+        // me.tag = 'button';
         me.children = [
             ctx.data.tabulkaStore.results.map(item => ( {tag: 'p', children: item.userName})),
             ctx.data.title
         ];
-        me.className = "butt";
+        me.className = "buttww";
         me.style = {
             "position": "relative",
             "left": "calc(calc(100% - 150px ) /2)",

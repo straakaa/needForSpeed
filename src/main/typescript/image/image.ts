@@ -14,7 +14,7 @@ interface IContext extends b.IBobrilCtx {
 
 export const create = b.createComponent<IData>({
     render(ctx: IContext, me: b.IBobrilNode) {
-        console.log('renderButton')
+        console.log('renderButton');
 
         const d = ctx.data;
         me.children = ctx.data.children;

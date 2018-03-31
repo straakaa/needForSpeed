@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bobril": "*",
+    "bobrilstrap": "^3.0.0",
     "bobx": "^0.11.0",
     "es6": "0.0.7",
     "pure-upload": "^4.2.1"

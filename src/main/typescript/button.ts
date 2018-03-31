@@ -30,16 +30,22 @@ export const button = b.createComponent<IButtonData>({
         // xhttpRequest.send();
     },
     render(ctx: IButtonCtx, me: b.IBobrilNode) {
+        
         me.tag = 'button';
         me.children = ctx.data.title;
         me.className = 'butt';
         me.style = {
             'position': 'relative',
-            'left': 'calc(calc(100% - 150px ) /2)',
-            'top': 'calc(calc(100% - 50px ))',
-            'width': '150px',
-            'height': '20px',
-
+            'border': '1px solid',
+            'left': 'calc((100% - 200px) /2)',
+            'width': '200px',
+            'height': '40px',
+            'letter-spacing': '1px',
+            'text-transform': 'uppercase',
+            'background': '#0099cc',
+            'color': '#ffffff', 
+            'border-radius': '8px',
+            'border-color': '#0086b3'
         }
     },
     onClick(ctx: IButtonCtx): boolean {
@@ -47,7 +53,7 @@ export const button = b.createComponent<IButtonData>({
         ctx.data.onClick(true);
         return true;
     },
-    postInitDom(_ctx: IButtonCtx, _me, _element: HTMLElement){
+    postInitDom(_ctx: IButtonCtx, _me, _element: HTMLElement) {
         let uploaderExample1 = PureUpload.getUploader({maxParallelUploads: 2, autoStart: true, autoRemove: false}, {});
 
         let uploadSettings = {
@@ -71,7 +77,7 @@ export const button = b.createComponent<IButtonData>({
                 tableStore.addResult(nfsResult);
 
             } else {
-                alert('Result hasnt been saved. You dont have better result.')
+                alert('Result hasnt been saved. You dont have better result.');
             }
 
             console.log('onUploaded', file);
