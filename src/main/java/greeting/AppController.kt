@@ -19,7 +19,7 @@ class AppController {
 
     private val storage: File = File("storage.txt")
     private val logger: Logger
-
+    private val FIRST_RESULT = -1
     init{
         storage.createNewFile()
         logger = Logger.getLogger(AppController::class.java.name)
@@ -66,8 +66,8 @@ class AppController {
 
     private fun isUserNameStored(userName: String): Int {
         val results = readResultsFromStorage()
-        val result = results.stream().filter { r -> r.getUserName().equals(userName) }.findFirst().orElse(null)
-        return result?.getNumberOfCameras() ?: -1
+        val result = results.stream().filter { r -> r.getUserName() == userName }.findFirst().orElse(null)
+        return result?.getNumberOfCameras() ?: FIRST_RESULT
     }
 
     @Synchronized private fun saveResult(result: NFSResult): Boolean {
@@ -76,11 +76,12 @@ class AppController {
             println("exist with: " + numberOfCameras)
             if (numberOfCameras < result.getNumberOfCameras()) {
                 logger.info("Rewriting result in storage: " + numberOfCameras)
+                //TODO nahradit stary zaznam jmeno
                 saveToStorage(result)
                 return true
 
             }
-        } else {
+        } else { //FIRST TIME TO STORE
             saveToStorage(result)
             return true
         }

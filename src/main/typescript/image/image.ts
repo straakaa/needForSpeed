@@ -23,10 +23,10 @@ export const create = b.createComponent<IData>({
             me,
             {
                 'height': '100%',
-                'background-image':`url(${ctx.data.asset})`,
-                'background-repeat':'no-repeat',
-                'background-size':'cover',
-                'background-position':'center',
+                'background-image': `url(${ctx.data.asset})`,
+                'background-repeat': 'no-repeat',
+                'background-size': 'cover',
+                'background-position': 'center',
                 //
                 // backgroundImage: ctx.data.asset,
                 // width: '100%',

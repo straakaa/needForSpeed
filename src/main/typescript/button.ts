@@ -70,7 +70,7 @@ export const button = b.createComponent<IButtonData>({
         let area = uploaderExample1.registerArea(_element, uploadSettings);
         area.uploader.queue.callbacks.onUploadedCallback = (file: PureUpload.IUploadFile) => {
             console.log('response text: ', file['responseText'].toString());
-            if (file['responseText'] !== '200') {
+            if (doesFileContainCorrectResult(file)) { 
                 alert('Result has been saved.');
                 console.log(file['responseText']);
                 let nfsResult: NFSResult = JSON.parse(file['responseText']);
@@ -85,5 +85,7 @@ export const button = b.createComponent<IButtonData>({
 
     }
 });
-
+const doesFileContainCorrectResult = (file: PureUpload.IUploadFile): Boolean => {
+    return file['responseText'] !== '200';
+}
 export default button;

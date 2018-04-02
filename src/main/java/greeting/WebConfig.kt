@@ -12,5 +12,7 @@ open class WebConfig : WebMvcConfigurerAdapter() {
                     .addResourceLocations("classpath:/static/js/")
             registry.addResourceHandler("/a.jpg")
                     .addResourceLocations("classpath:/static/images/")
+            registry.addResourceHandler("/a.css")
+                    .addResourceLocations("classpath:/static/css/")
     }
 }

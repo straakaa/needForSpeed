@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 class Graph {
+    private val EXCEEDED_NUMBER_OF_CHOSEN_NODES = -2
+    private val GRAPH_IS_NOT_COVERED = -1
     var edges: List<Edge>
     var chosenNodes: MutableList<Int> = mutableListOf()
     var uncoveredEdges: MutableList<Edge> = mutableListOf()
@@ -47,7 +49,7 @@ class Graph {
 
 
     fun isCityCovered(crossroads: MutableList<Int> ): Int {
-        if (crossroads.size > this.edges.size) return -2
+        if (crossroads.size > this.edges.size) return EXCEEDED_NUMBER_OF_CHOSEN_NODES
 
         for (cr in crossroads) {
             for (e in this.edges) {
@@ -56,9 +58,10 @@ class Graph {
                 }
             }
         }
-        return if(isGraphCovered(this.edges)) crossroads.size else -1
+        return if(isGraphCovered(this.edges)) crossroads.size else GRAPH_IS_NOT_COVERED
     }
 
+    //TODO maybe mistake
     fun isGraphCovered(edges: List<Edge>): Boolean = edges.any { it.isCovered() }
 
     fun unCoverGraph() {

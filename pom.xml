@@ -120,6 +120,25 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-resources-css</id>
+                        <!-- here the phase you need -->
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/main/resources/static/css</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/typescript/dist</directory>
+                                    <includes>
+                                        <include>a.css</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

@@ -1,4 +1,4 @@
 export interface NFSResult{
-    userName: String;
+    userName: string;
     numberOfCameras: number;
 }
